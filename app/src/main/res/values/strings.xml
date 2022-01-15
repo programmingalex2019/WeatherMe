@@ -1,0 +1,13 @@
+<resources>
+    <!-- Landing page strings-->
+    <string name="app_name">WeatherMe</string>
+    <string name="weatherme">WeatherMe</string>
+    <string name="location">Liopetri,Cyprus</string>
+    <string name="logoDescription">logo</string>
+    <string name="locationTemperature">20°C</string>
+    <string name="inputHint">Enter city for weather</string>
+    <string name="findButtonText">find</string>
+    <string name="logInScreenLink">Log into account</string>
+    <string name="loginlinkicon">logInLinkIcon</string>
+    <!-- Landing page strings-->
+</resources>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:id="@+id/logoSection"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/homeContent"
+        android:paddingTop="40dp"
+        >
+
+        <TextView
+            android:id="@+id/textLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/weatherme"
+            android:textSize="40sp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/logoIcon"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@id/textLogo"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="60dp"
+            android:src="@drawable/logo"
+            android:contentDescription="@string/logoDescription"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/homeContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoSection">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/cityCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
+                android:text="@string/location"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+
+            <TextView
+                android:id="@+id/cityDegrees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/locationTemperature"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cityInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:hint="@string/inputHint"
+                    android:lines="1"
+                    android:textColorHint="@color/white"
+                    android:fontFamily="@font/roboto_italic"
+                    android:maxLength="20"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:onClick="findCity"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:text="@string/findButtonText"
+                android:layout_gravity="end"
+                android:background="@drawable/button_style"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:layout_marginEnd="35dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logIn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:gravity="center"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logInScreenLink"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_bold_italic"
+                android:textColor="@color/linkColor"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/account_icon"
+                android:paddingStart="5dp"
+                android:contentDescription="@string/loginlinkicon"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
