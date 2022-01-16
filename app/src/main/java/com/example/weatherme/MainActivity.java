@@ -6,11 +6,13 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static String API_KEY = "47f309e7-d912-4d21-baf7-5e19628781f0";
     private TextView cityCountry;
     private TextView cityTemperature;
+    private TextView signIn;
     private LocationManager locationManager;
     private RequestQueue mQueue;
 
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         //initialize queue for requests
         mQueue = Volley.newRequestQueue(this);
 
+        signIn = findViewById(R.id.signIn);
+
         //runtime permission
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
@@ -52,6 +57,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         //access latitude and longitude -> request for weather -> update UI
         getLocationAndWeather();
+
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), SignIn.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+
 
     }
 

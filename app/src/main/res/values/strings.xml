@@ -7,7 +7,12 @@
     <string name="locationTemperature">20°C</string>
     <string name="inputHint">Enter city for weather</string>
     <string name="findButtonText">find</string>
-    <string name="logInScreenLink">Log into account</string>
+    <string name="SignInScreenLink">Sign into account</string>
     <string name="loginlinkicon">logInLinkIcon</string>
+    <string name="textLogIn">LogIn</string>
+    <string name="textRegister">Register</string>
+    <string name="register_message">Don\'t have an account ? Register here ...</string>
+    <string name="logIn_message">Already have an account ? Log in here ...</string>
+
     <!-- Landing page strings-->
 </resources>
