@@ -15,8 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/homeContent"
-        android:paddingTop="40dp"
-        >
+        android:paddingTop="40dp">
 
         <TextView
             android:id="@+id/textLogo"
@@ -54,8 +53,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
 
             <TextView
@@ -81,54 +81,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cityInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:hint="@string/inputHint"
-                    android:lines="1"
-                    android:textColorHint="@color/white"
-                    android:fontFamily="@font/roboto_italic"
-                    android:maxLength="20"
-                    >
-
-                </com.google.android.material.textfield.TextInputEditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:onClick="findCity"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:text="@string/findButtonText"
-                android:layout_gravity="end"
-                android:background="@drawable/button_style"
-                android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:layout_marginEnd="35dp"/>
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/logIn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center"
             tools:ignore="UseCompoundDrawables">
