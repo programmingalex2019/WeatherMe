@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "321426082067",
+    "project_id": "weatherme-32221",
+    "storage_bucket": "weatherme-32221.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321426082067:android:3e6757ef67857717cbf2e6",
+        "android_client_info": {
+          "package_name": "com.example.weatherme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321426082067-4gq6jo925ufffm43rmhndim3ciujfev6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjrLSkwtNRbPCR-g_TecZev3-nygSyDxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321426082067-4gq6jo925ufffm43rmhndim3ciujfev6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
