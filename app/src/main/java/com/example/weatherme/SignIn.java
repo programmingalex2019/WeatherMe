@@ -1,6 +1,7 @@
 package com.example.weatherme;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -80,7 +81,7 @@ public class SignIn extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             //change Activity with
-            Toast.makeText(SignIn.this, "Current User success: " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), Home.class));
         }
     }
 
@@ -152,7 +153,7 @@ public class SignIn extends AppCompatActivity {
                             Log.d("SignUp", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //update UI with User
-                            Toast.makeText(SignIn.this, "Authentication Registration success with user: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Home.class));
                         }else{
                             // If sign in fails, display a message to the user.
                             Log.w("SignUp", "createUserWithEmail:failure", task.getException());
@@ -172,7 +173,7 @@ public class SignIn extends AppCompatActivity {
                             Log.d("SignIn", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //update UI with User
-                            Toast.makeText(SignIn.this, "Authentication LogIn success with user: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Home.class));
                         }else{
                             // If sign in fails, display a message to the user.
                             Log.w("SignIn", "signInWithEmail:failure", task.getException());
