@@ -3,19 +3,98 @@ package com.example.weatherme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
+
+    private static String API_KEY = "47f309e7-d912-4d21-baf7-5e19628781f0";
+
+    private FirebaseAuth mAuth;
+    private Spinner countrySp;
+    private Spinner stateSp;
+
+    ArrayList<String> arrayList_country;
+    ArrayAdapter<String> arrayAdapter_country;
+
+    ArrayList<String> arrayList_cyprus, arrayList_czech, arrayList_sweeden;
+    ArrayAdapter<String> arrayAdapter_states;
+
+    private RecyclerView mRecyclerView;
+    private CityAdapter cityAdapter;
+    private ArrayList<CityModel> cityModels;
+    private RequestQueue requestQueue;
+
+    private Button searchCities;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
+
+        countrySp = findViewById(R.id.sp_country);
+        stateSp = findViewById(R.id.sp_state);
+
+        arrayList_country = new ArrayList<>();
+        arrayList_country.add("Cyprus");
+        arrayList_country.add("Czech Republic");
+
+        arrayAdapter_country = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList_country);
+        countrySp.setAdapter(arrayAdapter_country);
+
+        //sublist
+        arrayList_cyprus = new ArrayList<>();
+        arrayList_cyprus.add("Ammochostos");
+        arrayList_cyprus.add("Larnaka");
+        arrayList_cyprus.add("Nicosia");
+
+        arrayList_czech = new ArrayList<>();
+        arrayList_czech.add("Central Bohemia");
+        arrayList_czech.add("Praha");
+        arrayList_czech.add("Kralovehradecky");
+
+
+        countrySp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0){
+                    arrayAdapter_states = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList_cyprus);
+                }else if(i == 1){
+                    arrayAdapter_states = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList_czech);
+                }
+                stateSp.setAdapter(arrayAdapter_states);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //Initialize navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -45,5 +124,61 @@ public class Home extends AppCompatActivity {
             }
         });
 
+
+        //RecyclerView
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cityModels = new ArrayList<>();
+        //Json
+        requestQueue = Volley.newRequestQueue(this);
+        //Search
+        searchCities = findViewById(R.id.searchButton);
+        searchCities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cityModels.clear();
+                parseJson();
+            }
+        });
+
     }
+
+    private void parseJson(){
+
+        String url = "https://api.airvisual.com/v2/cities?state=" + stateSp.getSelectedItem().toString() + "&country="+countrySp.getSelectedItem().toString()+"&key="+API_KEY;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("data");
+
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                JSONObject data = jsonArray.getJSONObject(i);
+                                String cityName = data.getString("city");
+
+                                cityModels.add(new CityModel(cityName, stateSp.getSelectedItem().toString(), countrySp.getSelectedItem().toString()));
+                            }
+
+                            cityAdapter = new CityAdapter(Home.this, cityModels);
+                            mRecyclerView.setAdapter(cityAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestQueue.add(request);
+
+    }
+
+
 }

@@ -59,10 +59,14 @@ public class SignIn extends AppCompatActivity {
                 signInToggle = !signInToggle;
 
                 if (!signInToggle){
+                    textInputEmail.getEditText().setText("");
+                    textInputPassword.getEditText().setText("");
                     textLogo.setText(R.string.textLogIn);
                     signButton.setText(R.string.textLogIn);
                     switchSignIn.setText(R.string.register_message);
                 }else{
+                    textInputEmail.getEditText().setText("");
+                    textInputPassword.getEditText().setText("");
                     textLogo.setText(R.string.textRegister);
                     signButton.setText(R.string.textRegister);
                     switchSignIn.setText(R.string.logIn_message);

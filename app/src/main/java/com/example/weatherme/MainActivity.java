@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     //fields
     private static String API_KEY = "47f309e7-d912-4d21-baf7-5e19628781f0";
+    
     private TextView cityCountry;
     private TextView cityTemperature;
     private TextView signIn;

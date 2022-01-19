@@ -1,19 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
+
     >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/selection"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true">
-    </TextView>
+        android:paddingHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Country"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp">
+
+        </TextView>
+
+        <Spinner
+            android:id="@+id/sp_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_country"
+            android:layout_marginTop="20dp"
+            >
+        </Spinner>
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="State"
+            android:textSize="20sp"
+            android:layout_below="@id/sp_country"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp">
+
+        </TextView>
+
+        <Spinner
+            android:id="@+id/sp_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_state"
+            android:layout_marginTop="20dp">
+        </Spinner>
+
+
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:background="@drawable/button_style"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold_italic"
+            android:layout_below="@id/sp_state">
+
+        </Button>
+
+    </RelativeLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/selection"
+        android:layout_marginTop="20dp">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -24,7 +94,10 @@
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/menu_navigation"
         android:layout_alignParentBottom="true">
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+
+
 
 </RelativeLayout>
