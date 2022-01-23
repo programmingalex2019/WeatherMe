@@ -1,12 +1,7 @@
-package com.example.weatherme;
+package com.example.weatherme.Screens;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weatherme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -91,12 +87,11 @@ public class SignIn extends AppCompatActivity {
 
     private boolean validateEmail(){
         String emailInput = textInputEmail.getEditText().getText().toString().trim();
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if(emailInput.isEmpty()){
             textInputEmail.setError("Field can't be empty");
             return false;
         }
-        else if(!emailInput.matches(emailPattern)){
+        else if(!emailInput.contains("@")){
             textInputEmail.setError("Must be valid email");
             return false;
         }

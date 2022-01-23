@@ -57,22 +57,6 @@
         </Spinner>
 
 
-
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:background="@drawable/button_style"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:fontFamily="@font/roboto_bold_italic"
-            android:layout_below="@id/sp_state">
-
-        </Button>
-
     </RelativeLayout>
 
 
@@ -82,7 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/selection"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="70dp">
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

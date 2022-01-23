@@ -1,4 +1,4 @@
-package com.example.weatherme;
+package com.example.weatherme.Screens;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.weatherme.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Observations extends AppCompatActivity {

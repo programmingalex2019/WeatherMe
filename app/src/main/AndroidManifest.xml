@@ -14,18 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Account"></activity>
-        <activity android:name=".Observations" />
-        <activity android:name=".Favorites" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Screens.Account"></activity>
+        <activity android:name=".Screens.Observations" />
+        <activity android:name=".Screens.Favorites" />
+        <activity android:name=".Screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignIn" />
-        <activity android:name=".Home" />
+        <activity android:name=".Screens.SignIn" />
+        <activity android:name=".Screens.Home" />
     </application>
 
 </manifest>

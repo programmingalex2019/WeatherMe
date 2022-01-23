@@ -1,7 +1,13 @@
-package com.example.weatherme;
+package com.example.weatherme.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "cities")
 public class CityModel {
 
+    @PrimaryKey @NonNull
     private String cityName;
     private String cityState;
     private String cityCountry;

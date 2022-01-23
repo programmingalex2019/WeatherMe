@@ -1,4 +1,4 @@
-package com.example.weatherme;
+package com.example.weatherme.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.weatherme.Adapters.CityAdapter;
+import com.example.weatherme.Models.CityModel;
+import com.example.weatherme.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -50,8 +51,6 @@ public class Home extends AppCompatActivity {
     private ArrayList<CityModel> cityModels;
     private RequestQueue requestQueue;
 
-    private Button searchCities;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +63,7 @@ public class Home extends AppCompatActivity {
         arrayList_country.add("Cyprus");
         arrayList_country.add("Czech Republic");
 
-        arrayAdapter_country = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList_country);
+        arrayAdapter_country = new ArrayAdapter<>(getApplicationContext(), R.layout.drop_down_custom, arrayList_country);
         countrySp.setAdapter(arrayAdapter_country);
 
         //sublist
@@ -83,11 +82,24 @@ public class Home extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0){
-                    arrayAdapter_states = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList_cyprus);
+                    arrayAdapter_states = new ArrayAdapter<>(getApplicationContext(), R.layout.drop_down_custom, arrayList_cyprus);
                 }else if(i == 1){
-                    arrayAdapter_states = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList_czech);
+                    arrayAdapter_states = new ArrayAdapter<>(getApplicationContext(), R.layout.drop_down_custom, arrayList_czech);
                 }
                 stateSp.setAdapter(arrayAdapter_states);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        stateSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cityModels.clear();
+                parseJson();
             }
 
             @Override
@@ -132,15 +144,6 @@ public class Home extends AppCompatActivity {
         cityModels = new ArrayList<>();
         //Json
         requestQueue = Volley.newRequestQueue(this);
-        //Search
-        searchCities = findViewById(R.id.searchButton);
-        searchCities.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cityModels.clear();
-                parseJson();
-            }
-        });
 
     }
 

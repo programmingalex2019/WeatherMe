@@ -1,4 +1,4 @@
-package com.example.weatherme;
+package com.example.weatherme.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.weatherme.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-
-
     }
 
     @SuppressLint("MissingPermission")
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         public void onResponse(JSONObject response){
                             try{
 
+                                Log.d("LOCATION", response.getJSONObject("data").toString());
                                 JSONObject jsonObject = response.getJSONObject("data"); //main object
                                 //access individual objects and json fields
                                 cityCountry.setText(String.format("%s,%s",jsonObject.getString("city"),  jsonObject.getString("country")));
