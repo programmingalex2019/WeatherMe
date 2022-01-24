@@ -23,15 +23,14 @@
             android:padding="10dp"
             android:layout_weight="1"/>
 
-        <CheckBox
+        <ImageView
             android:id="@+id/remove_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/checkbox_city"
-            android:width="30dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5">
-        </CheckBox>
+            android:src="@drawable/remove_favorite_asset"
+            android:layout_gravity="center_vertical"
+            >
+        </ImageView>
 
     </LinearLayout>
 

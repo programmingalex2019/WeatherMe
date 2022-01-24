@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/white"
-                android:text="@string/location"
+                android:text="Loading..."
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -73,7 +73,7 @@
                 android:id="@+id/cityDegrees"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/locationTemperature"
+                android:text=""
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/white"
                 android:textAlignment="center"
@@ -88,27 +88,32 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center"
             tools:ignore="UseCompoundDrawables">
 
-            <TextView
+            <Button
                 android:id="@+id/signIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/SignInScreenLink"
-                android:textAlignment="center"
-                android:fontFamily="@font/roboto_bold_italic"
-                android:textColor="@color/linkColor"
-                android:textSize="18sp" />
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button_style"
+                android:text="SignIn"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto_bold"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/account_icon"
-                android:paddingStart="5dp"
-                android:contentDescription="@string/loginlinkicon"
-                tools:ignore="RtlSymmetry" />
+            <Button
+                android:id="@+id/guestSign"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button_style"
+                android:text="Continue as guest"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto_bold"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"/>
 
         </LinearLayout>
 

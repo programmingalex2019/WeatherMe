@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     
     private TextView cityCountry;
     private TextView cityTemperature;
-    private TextView signIn;
+    private Button signIn;
+    private Button signGuest;
     private LocationManager locationManager;
     private RequestQueue mQueue;
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mQueue = Volley.newRequestQueue(this);
 
         signIn = findViewById(R.id.signIn);
+        signGuest = findViewById(R.id.guestSign);
 
         //runtime permission
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
@@ -65,7 +68,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), SignIn.class);
-                startActivityForResult(myIntent, 0);
+                startActivity(myIntent);
+            }
+        });
+
+        signGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), Home.class);
+                startActivity(myIntent);
             }
         });
 
@@ -90,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             //JSON GET REQUEST -> using Volley library
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlString, null,
                     new Response.Listener<JSONObject>(){
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void onResponse(JSONObject response){
                             try{
@@ -101,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                                 cityTemperature.setText(String.format("%s°C",jsonObject.getJSONObject("current").getJSONObject("weather").getString("tp")));
 
                             }catch (JSONException e){
+                                cityCountry.setText("Could not load data");
                                 e.printStackTrace(); //prints all errors
                             }
                         }

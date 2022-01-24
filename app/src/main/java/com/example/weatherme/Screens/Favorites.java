@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.weatherme.Adapters.CityAdapter;
 import com.example.weatherme.Adapters.FavoriteCityAdapter;
@@ -37,8 +41,6 @@ public class Favorites extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         //Initialize navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
@@ -66,14 +68,18 @@ public class Favorites extends AppCompatActivity {
                 return false;
             }
         });
+    }
 
-
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         Executors.newSingleThreadExecutor().execute(() -> {
 
             final myDAO myDAO = MyDatabase.getDatabase(this).myDAO();
@@ -95,10 +101,23 @@ public class Favorites extends AppCompatActivity {
 
                     });
                 }
+
+                @Override
+                public void onItemClick(int position) {
+                    if(!isNetworkAvailable()){
+                        Toast.makeText(getApplicationContext(), "Please connect to internet", Toast.LENGTH_LONG).show();
+                    }else{
+                        Intent i = new Intent(Favorites.this, CityWeather.class);
+                        ArrayList<String> cityData = new ArrayList<>();
+                        cityData.add(cityModels.get(position).getCityName());
+                        cityData.add(cityModels.get(position).getCityState());
+                        cityData.add(cityModels.get(position).getCityCountry());
+                        cityData.add("favorites"); //indicate activity from
+                        i.putExtra("cityModel", cityData);
+                        startActivity(i);
+                    }
+                }
             });
-
         });
-
-
     }
 }

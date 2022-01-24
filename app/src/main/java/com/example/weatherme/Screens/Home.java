@@ -1,12 +1,17 @@
 package com.example.weatherme.Screens;
 
+import android.accounts.NetworkErrorException;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends AppCompatActivity {
 
@@ -147,40 +153,63 @@ public class Home extends AppCompatActivity {
 
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     private void parseJson(){
 
-        String url = "https://api.airvisual.com/v2/cities?state=" + stateSp.getSelectedItem().toString() + "&country="+countrySp.getSelectedItem().toString()+"&key="+API_KEY;
+        if(!isNetworkAvailable()){
+            Toast.makeText(getApplicationContext(), "Please connect to internet", Toast.LENGTH_LONG).show();
+        }else{
+            String url = "https://api.airvisual.com/v2/cities?state=" + stateSp.getSelectedItem().toString() + "&country="+countrySp.getSelectedItem().toString()+"&key="+API_KEY;
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("data");
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("data");
 
-                            for(int i = 0; i < jsonArray.length(); i++){
-                                JSONObject data = jsonArray.getJSONObject(i);
-                                String cityName = data.getString("city");
+                                for(int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject data = jsonArray.getJSONObject(i);
+                                    String cityName = data.getString("city");
 
-                                cityModels.add(new CityModel(cityName, stateSp.getSelectedItem().toString(), countrySp.getSelectedItem().toString()));
+                                    cityModels.add(new CityModel(cityName, stateSp.getSelectedItem().toString(), countrySp.getSelectedItem().toString()));
+                                }
+
+                                cityAdapter = new CityAdapter(Home.this, cityModels);
+                                mRecyclerView.setAdapter(cityAdapter);
+
+                                cityAdapter.setOnItemClickListener(new CityAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position) {
+                                        Intent i = new Intent(Home.this, CityWeather.class);
+                                        ArrayList<String> cityData = new ArrayList<>();
+                                        cityData.add(cityModels.get(position).getCityName());
+                                        cityData.add(cityModels.get(position).getCityState());
+                                        cityData.add(cityModels.get(position).getCityCountry());
+                                        cityData.add("home"); //indicate activity from
+                                        i.putExtra("cityModel", cityData);
+                                        startActivity(i);
+                                    }
+                                });
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-                            cityAdapter = new CityAdapter(Home.this, cityModels);
-                            mRecyclerView.setAdapter(cityAdapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        requestQueue.add(request);
-
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            requestQueue.add(request);
+        }
     }
 
 
