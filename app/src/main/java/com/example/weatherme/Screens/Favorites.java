@@ -21,6 +21,7 @@ import com.example.weatherme.Data.myDAO;
 import com.example.weatherme.Models.CityModel;
 import com.example.weatherme.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +58,14 @@ public class Favorites extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.observations:
-                        startActivity(new Intent(getApplicationContext(), Observations.class));
-                        overridePendingTransition(0,0);
-                        return true;
+                        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+                        {
+                            startActivity(new Intent(getApplicationContext(), Observations.class));
+                            overridePendingTransition(0,0);
+                            return true;
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Only signed in users can use this feature", Toast.LENGTH_LONG).show();
+                        }
                     case R.id.account:
                         startActivity(new Intent(getApplicationContext(), Account.class));
                         overridePendingTransition(0,0);

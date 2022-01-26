@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weatherme.R;
 import com.example.weatherme.Screens.Favorites;
@@ -53,9 +54,14 @@ public class Account extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.observations:
-                        startActivity(new Intent(getApplicationContext(), Observations.class));
-                        overridePendingTransition(0,0);
-                        return true;
+                        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+                        {
+                            startActivity(new Intent(getApplicationContext(), Observations.class));
+                            overridePendingTransition(0,0);
+                            return true;
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Only signed in users can use this feature", Toast.LENGTH_LONG).show();
+                        }
                     case R.id.favorites:
                         startActivity(new Intent(getApplicationContext(), Favorites.class));
                         overridePendingTransition(0,0);

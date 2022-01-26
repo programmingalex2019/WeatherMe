@@ -7,14 +7,41 @@
     tools:context=".Screens.Observations"
     android:background="@color/colorPrimary">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Observations"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Observations"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"/>
+
+        <Button
+            android:id="@+id/add_observation"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button_style"
+            android:text="Add"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/observationsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

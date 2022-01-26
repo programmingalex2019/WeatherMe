@@ -13,6 +13,7 @@
     <string name="textRegister">Register</string>
     <string name="register_message">Don\'t have an account ? Register here ...</string>
     <string name="logIn_message">Already have an account ? Log in here ...</string>
+    <string name="title_activity_observations2">Observations2</string>
 
     <!-- Landing page strings-->
 </resources>

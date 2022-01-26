@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Screens.CityWeather"></activity>
+        <activity android:name=".Screens.EditObservation"></activity>
+        <activity android:name=".Screens.CityWeather" />
         <activity android:name=".Screens.Account" />
         <activity android:name=".Screens.Observations" />
         <activity android:name=".Screens.Favorites" />

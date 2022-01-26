@@ -6,16 +6,20 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.Request;
@@ -62,7 +66,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
 
         //access latitude and longitude -> request for weather -> update UI
-        getLocationAndWeather();
+        if(!isNetworkAvailable()){
+            Toast.makeText(getApplicationContext(), "Please connect to internet", Toast.LENGTH_LONG).show();
+        }else{
+            getLocationAndWeather();
+        }
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +88,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @SuppressLint("MissingPermission")

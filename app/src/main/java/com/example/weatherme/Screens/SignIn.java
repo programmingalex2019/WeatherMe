@@ -13,11 +13,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weatherme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignIn extends AppCompatActivity {
 
@@ -29,8 +36,10 @@ public class SignIn extends AppCompatActivity {
     private static boolean signInToggle = false; //False for logIn - True for register
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore _db = FirebaseFirestore.getInstance();
 
     @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_layout);
@@ -151,6 +160,25 @@ public class SignIn extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("SignUp", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            //add User to firestore
+                            //add observation with document id as title -> assuming title's are unique
+                            CollectionReference dbUsers = _db.collection("users");
+                            Map<String, Object> userObject = new HashMap<>();
+                            userObject.put("email", user.getEmail());
+
+                            dbUsers.document(user.getUid()).set(userObject).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                             //update UI with User
                             startActivity(new Intent(getApplicationContext(), Home.class));
                         }else{
