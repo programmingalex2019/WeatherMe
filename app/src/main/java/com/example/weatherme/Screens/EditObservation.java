@@ -1,10 +1,7 @@
 package com.example.weatherme.Screens;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.weatherme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,21 +18,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class EditObservation extends AppCompatActivity {
 
+    //UI fields
     private EditText observationContent;
     private EditText observationTitle;
     private Button saveObservation;
     private ImageView goBack;
-
+    //secondary fields
     private boolean editMode = false;
-    private boolean existsInDatabase = false;
     private String editingPosition;
 
+    //firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -44,11 +39,13 @@ public class EditObservation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_observation);
 
+        //initialize UI
         observationContent = findViewById(R.id.observation_content);
         observationTitle = findViewById(R.id.observation_title);
         saveObservation = findViewById(R.id.saveObservation);
         goBack = findViewById(R.id.goBack);
 
+        //leave screen
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,37 +53,22 @@ public class EditObservation extends AppCompatActivity {
             }
         });
 
-        observationTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                existsInDatabase = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if(extras != null){ //if not null -> state is EDIT MODE
+            //Receive data to be changed
             ArrayList<String> observationData = extras.getStringArrayList("observation");
             observationTitle.setText(observationData.get(0));
             observationContent.setText(observationData.get(1));
             editingPosition = observationData.get(2);
             editMode = true;
-            Toast.makeText(getApplicationContext(), "Edit mode", Toast.LENGTH_SHORT).show();
-
+            Log.i("weatherDebug", editingPosition);
         }
 
+        //on save button clicked
         saveObservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //title and content need to be not empty
                 if(observationContent.getText().toString().trim().length() > 0 && observationTitle.getText().toString().trim().length() > 0){
 
                     //prepare data to be sent
@@ -95,37 +77,24 @@ public class EditObservation extends AppCompatActivity {
                     observationData.add(observationTitle.getText().toString().trim()); //1 title
                     Intent data = new Intent();
 
-                    db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("observations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if(document.getData().containsValue(observationTitle.getText().toString().trim())){
-                                        Toast.makeText(getApplicationContext(), "An observation with such title already exists", Toast.LENGTH_SHORT).show();
-                                        existsInDatabase = true;
-                                        break;
-                                    }
-                                }
-                                if(!editMode){
-                                    if(!existsInDatabase){
-                                        data.putExtra("data", observationData);
-                                        setResult(RESULT_OK, data);
-                                        finish();
-                                    }
-                                }else{
-                                    if(!existsInDatabase) {
-                                        observationData.add(editingPosition);
-                                        data.putExtra("data_edit", observationData);
-                                        setResult(RESULT_OK, data);
-                                        finish();
-                                    }
-                                }
-                            }
-                        }
-                    });
+                    //where to retrieve data and in which mode
+                    if(!editMode){
+
+                        data.putExtra("data", observationData); //add observation
+                        setResult(RESULT_OK, data);
+                        finish(); //exit
+
+                    }else{
+
+                        observationData.add(editingPosition);
+                        data.putExtra("data_edit", observationData);//add observation
+                        setResult(RESULT_OK, data);
+                        finish(); //exit
+
+                    }
 
                 }else{
-                    Toast.makeText(getApplicationContext(), "Observations should have a title and content", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Observations should have a title and content", Toast.LENGTH_SHORT).show(); //inform user
                 }
             }
         });
