@@ -15,12 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Screens.EditObservation"></activity>
-        <activity android:name=".Screens.CityWeather" />
-        <activity android:name=".Screens.Account" />
-        <activity android:name=".Screens.Observations" />
-        <activity android:name=".Screens.Favorites" />
-        <activity android:name=".Screens.Landing">
+        <activity android:windowSoftInputMode="adjustPan" android:name=".Screens.EditObservation"></activity>
+        <activity android:windowSoftInputMode="adjustPan" android:name=".Screens.CityWeather" />
+        <activity android:windowSoftInputMode="adjustPan" android:name=".Screens.Account" />
+        <activity android:windowSoftInputMode="adjustPan" android:name=".Screens.Observations" />
+        <activity android:windowSoftInputMode="adjustPan" android:name=".Screens.Favorites" />
+        <activity android:windowSoftInputMode="adjustPan" android:name=".Screens.Landing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

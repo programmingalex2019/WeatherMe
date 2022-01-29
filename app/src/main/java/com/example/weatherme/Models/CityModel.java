@@ -1,23 +1,26 @@
 package com.example.weatherme.Models;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "cities")
+//Define as an entity in database (sql)
+@Entity(tableName = "cities") //table
 public class CityModel {
 
+    //properties
     @PrimaryKey @NonNull
     private String cityName;
     private String cityState;
     private String cityCountry;
 
+    //constructor
     public CityModel(String cityName, String cityState, String cityCountry) {
         this.cityName = cityName;
         this.cityState = cityState;
         this.cityCountry = cityCountry;
     }
 
+    //getters //immutable class
     public String getCityName() {
         return cityName;
     }
@@ -30,15 +33,4 @@ public class CityModel {
         return cityCountry;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public void setCityState(String cityState) {
-        this.cityState = cityState;
-    }
-
-    public void setCityCountry(String cityCountry) {
-        this.cityCountry = cityCountry;
-    }
 }

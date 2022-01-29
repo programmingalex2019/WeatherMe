@@ -30,7 +30,7 @@ public class SignIn extends AppCompatActivity {
     private TextView textLogo;
     private Button signButton;
     private TextView switchSignIn;
-    private static boolean signInToggle = false; //False for logIn - True for register
+    private boolean signInToggle;
     //Firebase
     private FirebaseAuth _mAuth; //for registration and signIn
     private FirebaseFirestore _db = FirebaseFirestore.getInstance(); //firestore database
@@ -42,6 +42,8 @@ public class SignIn extends AppCompatActivity {
 
         //Initialize Firebase Auth
         _mAuth = FirebaseAuth.getInstance();
+
+        signInToggle = false;//False for logIn - True for register
 
         //credentials editText
         textInputEmail = findViewById(R.id.emailInput);
@@ -191,15 +193,19 @@ public class SignIn extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            // Sign in success
-                            FirebaseUser user = _mAuth.getCurrentUser();
                             //change to Home screen
                             startActivity(new Intent(getApplicationContext(), Home.class));
                         }else{
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(SignIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(SignIn.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignIn.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

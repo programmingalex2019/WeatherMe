@@ -14,13 +14,14 @@
         android:layout_marginTop="40dp"
         android:src="@drawable/account_icon"
         android:layout_centerHorizontal="true"
-        />
+        android:contentDescription="@string/account_icon"/>
 
+    <!-- when clicked sign out user-->
     <TextView
         android:id="@+id/signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign out"
+        android:text="@string/sign_out"
         android:textSize="20sp"
         android:fontFamily="@font/roboto_italic"
         android:textColor="@color/white"
@@ -30,8 +31,7 @@
         android:layout_below="@id/accountIcon">
     </TextView>
 
-
-
+    <!-- to navigate to different activities -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
@@ -41,7 +41,6 @@
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/menu_navigation"
         android:layout_alignParentBottom="true">
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </RelativeLayout>
