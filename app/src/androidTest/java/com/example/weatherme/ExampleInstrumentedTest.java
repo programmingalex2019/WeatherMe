@@ -2,9 +2,17 @@ package com.example.weatherme;
 
 import android.content.Context;
 
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.weatherme.Screens.Landing;
+
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -17,11 +25,18 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
+    @Rule
+    public ActivityScenarioRule<Landing> activityScenarioRule =
+            new ActivityScenarioRule<Landing>(Landing.class);
+
     @Test
-    public void useAppContext() {
-        // Context of the app under test.
+    public void checkMatchingID(){
+
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.weatherme", appContext.getPackageName());
+        Espresso.onView(ViewMatchers.withId(R.id.signIn))
+                .check(ViewAssertions.matches(ViewMatchers.withText("SignIn")));
+
     }
 }

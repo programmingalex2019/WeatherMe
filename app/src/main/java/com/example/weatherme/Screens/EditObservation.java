@@ -18,6 +18,7 @@ public class EditObservation extends AppCompatActivity {
     private EditText observationContent;
     private EditText observationTitle;
     private Button saveObservation;
+    private Button shareObservation;
     private ImageView goBack;
     //secondary fields
     private boolean editMode = false;
@@ -35,6 +36,7 @@ public class EditObservation extends AppCompatActivity {
         observationContent = findViewById(R.id.observation_content);
         observationTitle = findViewById(R.id.observation_title);
         saveObservation = findViewById(R.id.saveObservation);
+        shareObservation = findViewById(R.id.shareObservation);
         goBack = findViewById(R.id.goBack);
 
         //leave screen
@@ -87,6 +89,29 @@ public class EditObservation extends AppCompatActivity {
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Observations should have a title and content", Toast.LENGTH_SHORT).show(); //inform user
+                }
+            }
+        });
+
+        //share observation functionality
+        shareObservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String content = observationContent.getText().toString();
+
+                //check if observation is not empty
+                if(!content.isEmpty()){
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, content); //add content to share
+                    sendIntent.setType("text/plain");
+
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    startActivity(shareIntent);
+
+                }else{ //inform user nothing to share
+                    Toast.makeText(getApplicationContext(), "Nothing to share", Toast.LENGTH_SHORT).show(); //inform user
                 }
             }
         });
