@@ -17,19 +17,19 @@
         android:contentDescription="@string/account_icon"/>
 
     <!-- when clicked sign out user-->
-    <TextView
+    <Button
         android:id="@+id/signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_out"
-        android:textSize="20sp"
-        android:fontFamily="@font/roboto_italic"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:background="@drawable/button_style"
+        android:text="Sign out"
+        android:textAllCaps="false"
+        android:fontFamily="@font/roboto_bold_italic"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/accountIcon">
-    </TextView>
+        android:layout_below="@id/accountIcon"
+        android:textColor="@color/white">
+    </Button>
 
     <!-- to navigate to different activities -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
